@@ -49,7 +49,7 @@ int main()
         if (lsum + left > max)
             max = lsum + left;
         lsum = left - white;
-        /*in case adding the white beads adjacent the break point twice, 
+        /*in case adding the white beads adjacent to the break point twice, 
          we only add them from the right side*/
         
         left = 1 + white;        //taking white beads on the left in account
