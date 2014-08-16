@@ -6,8 +6,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <string.h>
-#include <stdio.h>
+#include <cstring>
 
 using namespace std;
 
@@ -18,11 +17,10 @@ int main()
 {
     ofstream fout ("beads.out");
     ifstream fin ("beads.in");
-    fin >> n;
-    fin >> temp;
+    fin >> n >> temp;
     strcpy(nl, temp);
-    strcpy(nl+n, temp);
-    int lft = 0, max = 0, lmax = 0, white = 0;
+    strcat(nl, temp);
+    int left = 0, max = 0, lsum = 0, white = 0;
     char color = 'x';  //x means uncheck
     for (int i = 0; i < n; i++) {
         if (temp[i] != 'w')
@@ -30,7 +28,6 @@ int main()
             color = temp[i];
             break;
         }
-        
     }
     if (color == 'x')    // all white
     {
@@ -39,20 +36,23 @@ int main()
     }
     for (int i = 0; i < 2 * n; i++) {
         if (nl[i] == 'w') {
-            lft ++;
+            left ++;
             white ++;
             continue;
         }
         if (nl[i] == color) {
-            lft ++;
+            left ++;
             white = 0;
             continue;
         }
         color = nl[i];
-        if (lmax + lft > max)
-            max = lmax + lft;
-        lmax = lft - white;
-        lft = 1 + white;
+        if (lsum + left > max)
+            max = lsum + left;
+        lsum = left - white;
+        /*in case adding the white beads adjacent the break point twice, 
+         we only add them from the right side*/
+        
+        left = 1 + white;        //taking white beads on the left in account
         white = 0;
     }
     if (max > n || max == 0)
